@@ -2,6 +2,7 @@ package br.com.mateusapp.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Projeto {
@@ -22,6 +23,28 @@ public class Projeto {
 
     @ManyToOne(optional = false)
     private StatusProjeto status;
+
+    public Projeto() { }
+
+    public Projeto(String titulo, String descricao, LocalDateTime dataPrevista) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.dataPrevisaoEntrega = dataPrevista;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Projeto projeto = (Projeto) o;
+        return id.equals(projeto.id) &&
+                titulo.equals(projeto.titulo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, titulo);
+    }
 
     public Integer getId() {
         return id;
