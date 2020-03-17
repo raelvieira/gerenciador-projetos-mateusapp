@@ -1,3 +1,3 @@
-INSERT INTO statusprojeto (codigo, descricao) VALUES('I', 'INICIADO');
-INSERT INTO statusprojeto (codigo, descricao) VALUES('A', 'ANDAMENTO');
-INSERT INTO statusprojeto (codigo, descricao) VALUES('F', 'FINALIZADO');
+INSERT INTO statusprojeto (codigo, descricao) VALUES('I', 'Iniciado');
+INSERT INTO statusprojeto (codigo, descricao) VALUES('A', 'Em andamento');
+INSERT INTO statusprojeto (codigo, descricao) VALUES('F', 'Finalizado');

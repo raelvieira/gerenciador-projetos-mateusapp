@@ -1,4 +1,4 @@
-package br.com.mateusapp.models;
+package br.com.mateusapp.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 @Entity
 public class Projeto {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
 
     @Column(length = 50, nullable = false)
     private String titulo;
@@ -23,11 +23,11 @@ public class Projeto {
     @ManyToOne(optional = false)
     private StatusProjeto status;
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

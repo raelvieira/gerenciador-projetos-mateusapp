@@ -1,4 +1,4 @@
-package br.com.mateusapp.models;
+package br.com.mateusapp.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
