@@ -4,6 +4,7 @@ import br.com.mateusapp.model.Projeto;
 
 import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -13,7 +14,7 @@ public class ProjetoForm {
     private String titulo;
     @Size(max = 100)
     private String descricao;
-    @NotEmpty @FutureOrPresent
+    @NotNull @FutureOrPresent
     private LocalDateTime dataPrevisaoEntrega;
 
     public String getTitulo() {

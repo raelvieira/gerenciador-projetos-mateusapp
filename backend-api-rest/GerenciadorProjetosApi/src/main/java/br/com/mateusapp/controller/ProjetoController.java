@@ -1,5 +1,6 @@
 package br.com.mateusapp.controller;
 
+import br.com.mateusapp.controller.dto.DetalhesProjetoDto;
 import br.com.mateusapp.controller.dto.ProjetoDto;
 import br.com.mateusapp.controller.form.ProjetoForm;
 import br.com.mateusapp.model.Projeto;
@@ -35,8 +36,8 @@ public class ProjetoController {
     }
 
     @GetMapping
-    public Page<ProjetoDto> buscarTodos(@RequestParam(required = false) String tituloProjeto,
-                                  @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable paginacao) {
+    public Page<DetalhesProjetoDto> buscarTodos(@RequestParam(required = false) String tituloProjeto,
+                                                @PageableDefault(sort = "dataPrevisaoEntrega", direction = Sort.Direction.ASC) Pageable paginacao) {
 
         Page<Projeto> projetos;
 
@@ -46,24 +47,24 @@ public class ProjetoController {
             projetos = projetoService.buscarPorTitulo(tituloProjeto, paginacao);
         }
 
-        return ProjetoDto.converter(projetos);
+        return DetalhesProjetoDto.converter(projetos);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProjetoDto> buscarPor(@PathVariable Integer id) {
+    public ResponseEntity<DetalhesProjetoDto> buscarPor(@PathVariable Integer id) {
         Optional<Projeto> projetoOpt = projetoService.buscar(id);
 
-        if (projetoOpt.isPresent()) return ResponseEntity.ok(new ProjetoDto(projetoOpt.get()));
+        if (projetoOpt.isPresent()) return ResponseEntity.ok(new DetalhesProjetoDto(projetoOpt.get()));
 
         return ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ProjetoDto> atualizar(@PathVariable Integer id, @RequestBody @Valid ProjetoForm form) {
+    public ResponseEntity<ProjetoDto> editar(@PathVariable Integer id, @RequestBody @Valid ProjetoForm form) {
         Optional<Projeto> projetoOpt = projetoService.buscar(id);
 
         if (projetoOpt.isPresent()) {
-            Projeto projeto = projetoService.atualizar(form.converter());
+            Projeto projeto = projetoService.editar(projetoOpt.get(), form.converter());
             return ResponseEntity.ok(new ProjetoDto(projeto));
         }
 
@@ -76,6 +77,18 @@ public class ProjetoController {
 
         if (projetoOpt.isPresent()) {
             projetoService.excluir(id);
+            return ResponseEntity.ok().build();
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/finalizar/{id}")
+    public  ResponseEntity<?> finalizar(@PathVariable Integer id) {
+        Optional<Projeto> projetoOpt = projetoService.buscar(id);
+
+        if (projetoOpt.isPresent()) {
+            projetoService.finalizarProjeto(projetoOpt.get());
             return ResponseEntity.ok().build();
         }
 

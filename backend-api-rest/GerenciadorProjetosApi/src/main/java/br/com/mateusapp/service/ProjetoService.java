@@ -2,6 +2,7 @@ package br.com.mateusapp.service;
 
 import br.com.mateusapp.exceptions.ProjetoException;
 import br.com.mateusapp.model.Projeto;
+import br.com.mateusapp.model.StatusProjeto;
 import br.com.mateusapp.repository.ProjetoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,13 +53,12 @@ public class ProjetoService {
     }
 
     @Transactional
-    public Projeto atualizar(Projeto projeto) {
-        Projeto projetoAtualizacao = projetoRepository.getOne(projeto.getId());
-        validarInfosProjeto(projeto.getTitulo(), projeto.getDataPrevisaoEntrega());
+    public Projeto editar(Projeto projetoAtualizacao, Projeto projetoNovosDados) {
+        validarInfosProjeto(projetoNovosDados.getTitulo(), projetoNovosDados.getDataPrevisaoEntrega());
 
-        projetoAtualizacao.setDataPrevisaoEntrega(projeto.getDataPrevisaoEntrega());
-        projetoAtualizacao.setDescricao(projeto.getDescricao());
-        projetoAtualizacao.setTitulo(projeto.getTitulo());
+        projetoAtualizacao.setDataPrevisaoEntrega(projetoNovosDados.getDataPrevisaoEntrega());
+        projetoAtualizacao.setDescricao(projetoNovosDados.getDescricao());
+        projetoAtualizacao.setTitulo(projetoNovosDados.getTitulo());
 
         return projetoRepository.save(projetoAtualizacao);
     }
@@ -68,11 +68,36 @@ public class ProjetoService {
         projetoRepository.deleteById(id);
     }
 
+    @Transactional
+    public void finalizarProjeto(Projeto projeto) {
+        if(temTarefasNaoConcluidas(projeto))
+            throw new ProjetoException("Para finalizar este projeto é necessário concluir todas as suas tarefas!");
+
+        atualizaProjeto(projeto.getId(), "F");
+    }
+
+    @Transactional
+    public void atualizaStatusEmAndamento(Integer idProjeto, String codStatusProjeto) {
+        atualizaProjeto(idProjeto, codStatusProjeto);
+    }
+
+    private void atualizaProjeto(Integer idProjeto, String codStatusProjeto) {
+        StatusProjeto status = new StatusProjeto();
+        status.setCodigo(codStatusProjeto);
+
+        projetoRepository.atualizaStatus(idProjeto, status);
+    }
+
     private void validarInfosProjeto(String titulo, LocalDateTime dataPrevisaoEntrega) {
         if(titulo.isEmpty() || Objects.isNull(titulo))
             throw new ProjetoException("Por favor, digite um título para o projeto!");
 
         if(dataPrevisaoEntrega.isBefore(LocalDateTime.now()))
             throw new ProjetoException("A data de entrega não pode ser anterior a data atual!");
+    }
+
+    private boolean temTarefasNaoConcluidas(Projeto projeto) {
+        Long quantidade = projetoRepository.countTarefasNaoConcluidas(projeto);
+        return quantidade.intValue() != 0;
     }
 }

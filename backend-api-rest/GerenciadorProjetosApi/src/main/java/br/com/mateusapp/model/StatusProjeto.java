@@ -3,8 +3,10 @@ package br.com.mateusapp.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "status_projeto")
 public class StatusProjeto {
     @Id @Column(length = 1)
     private String codigo;

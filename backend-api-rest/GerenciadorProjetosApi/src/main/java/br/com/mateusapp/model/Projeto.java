@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 public class Projeto {
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(length = 50, nullable = false)
@@ -15,13 +15,14 @@ public class Projeto {
     @Column(length = 100, nullable = true)
     private String descricao;
 
-    @Column(nullable = false)
+    @Column(name = "data_criacao", nullable = false)
     private LocalDateTime dataCriacao;
 
-    @Column(nullable = true)
+    @Column(name = "data_previsao_entrega", nullable = true)
     private LocalDateTime dataPrevisaoEntrega;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "status_codigo")
     private StatusProjeto status;
 
     public Projeto() { }
