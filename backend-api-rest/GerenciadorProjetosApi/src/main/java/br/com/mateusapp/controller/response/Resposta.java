@@ -1,4 +1,4 @@
-package br.com.mateusapp.exceptions.handler;
+package br.com.mateusapp.controller.response;
 
 import java.util.ArrayList;
 import java.util.List;

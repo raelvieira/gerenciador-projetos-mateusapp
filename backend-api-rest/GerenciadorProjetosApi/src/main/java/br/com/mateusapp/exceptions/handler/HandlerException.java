@@ -1,5 +1,7 @@
 package br.com.mateusapp.exceptions.handler;
 
+import br.com.mateusapp.controller.response.Erro;
+import br.com.mateusapp.controller.response.Resposta;
 import br.com.mateusapp.exceptions.ProjetoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -66,5 +68,21 @@ public class HandlerException extends ResponseEntityExceptionHandler {
         resposta.adiciona(new Erro(mensagem, ex.getMostSpecificCause().toString() ));
 
         return resposta;
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Resposta> handleIllegalArgumentException(IllegalArgumentException ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .badRequest()
+                .body(Resposta.comDadosDe(new Erro("Dados não encontrados!", ex.getMessage())));
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Resposta> handleAllException(Exception ex) {
+        ex.printStackTrace();
+        return ResponseEntity
+                .status(500)
+                .body(Resposta.comDadosDe(new Erro("ERRO INTERNO!", ex.getMessage())));
     }
 }
