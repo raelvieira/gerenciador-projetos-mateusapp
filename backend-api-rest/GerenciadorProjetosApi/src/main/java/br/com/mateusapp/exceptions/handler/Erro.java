@@ -1,19 +1,19 @@
 package br.com.mateusapp.exceptions.handler;
 
 public class Erro {
-    private String campoErro;
-    private String erro;
+    private String mensagem;
+    private String detalhes;
 
-    public Erro(String campoErro, String erro) {
-        this.campoErro = campoErro;
-        this.erro = erro;
+    public Erro(String mensagem, String detalhes) {
+        this.mensagem = mensagem;
+        this.detalhes = detalhes;
     }
 
-    public String getCampoErro() {
-        return campoErro;
+    public String getMensagem() {
+        return mensagem;
     }
 
-    public String getErro() {
-        return erro;
+    public String getDetalhes() {
+        return detalhes;
     }
 }

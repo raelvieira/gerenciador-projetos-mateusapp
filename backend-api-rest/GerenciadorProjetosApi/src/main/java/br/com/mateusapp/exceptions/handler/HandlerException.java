@@ -1,5 +1,6 @@
 package br.com.mateusapp.exceptions.handler;
 
+import br.com.mateusapp.exceptions.ProjetoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -21,6 +22,13 @@ import java.util.Locale;
 public class HandlerException extends ResponseEntityExceptionHandler {
     @Autowired
     private MessageSource messageSource;
+
+    @ExceptionHandler(ProjetoException.class)
+    public final ResponseEntity<Erro> handleProjetoException(Exception ex, WebRequest request) {
+        Erro erroResponse = new Erro(ex.getMessage(), request.getDescription(false));
+
+        return new ResponseEntity<>(erroResponse, HttpStatus.BAD_REQUEST);
+    }
 
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
