@@ -72,8 +72,8 @@ Após isso, o usuário pode editar informações, marcar o projeto como finaliza
 ## 🤔 Como executar
 
 Cada pasta possui um Readme.md dentro com todas as instruções para a execução do projeto (backend e o aplicativo). Então, basta navegar até a pasta do projeto que deseja iniciar e seguir o passo a passo, ou, você pode acessar diretamente pelos links abaixo!
-* [Como executar o backend]()
-* [Como executar o aplicativo]()
+* [Como executar o backend](https://github.com/raelvieira/gerenciador-projetos-mateusapp/tree/master/backend-api-rest)
+* [Como executar o aplicativo](https://github.com/raelvieira/gerenciador-projetos-mateusapp/tree/master/front-end-app)
 
 <hr>
 
