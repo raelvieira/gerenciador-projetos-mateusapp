@@ -2,6 +2,7 @@ package br.com.mateusapp.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -24,6 +25,9 @@ public class Projeto {
     @ManyToOne(optional = false)
     @JoinColumn(name = "status_codigo")
     private StatusProjeto status;
+
+    @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL)
+    private List<TarefaProjeto> tarefas;
 
     public Projeto() { }
 

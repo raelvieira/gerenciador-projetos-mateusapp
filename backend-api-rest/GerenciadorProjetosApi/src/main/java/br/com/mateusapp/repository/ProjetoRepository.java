@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface ProjetoRepository extends JpaRepository<Projeto, Integer> {
     Page<Projeto> findByTitulo(String tituloProjeto, Pageable paginacao);
 
-    @Query(value = "SELECT COUNT(t) FROM TarefaProjeto t WHERE t.projeto = :projeto AND (t.status <> 'ABERTA')")
+    @Query(value = "SELECT COUNT(t) FROM TarefaProjeto t WHERE t.projeto = :projeto AND (t.status = 'ABERTA')")
     Long countTarefasNaoConcluidas(@Param("projeto") Projeto projeto);
 
     @Modifying

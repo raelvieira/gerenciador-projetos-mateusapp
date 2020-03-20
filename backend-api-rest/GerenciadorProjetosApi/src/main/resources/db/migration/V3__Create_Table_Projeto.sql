@@ -1,6 +1,6 @@
 CREATE TABLE projeto (
     id INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
-    titulo VARCHAR(50) NOT NULL,
+    titulo VARCHAR(50) UNIQUE NOT NULL,
     descricao VARCHAR(100),
     data_criacao DATETIME NOT NULL,
     data_previsao_entrega DATETIME,
