@@ -159,6 +159,4 @@ class _EditarPageState extends State<EditarPage> {
       Navigator.of(context).pop();
     }
   }
-
-
 }

@@ -16,12 +16,6 @@ class HomeTarefaBloc extends BlocBase {
 
   Function(String) get changeTitulo => _tituloTarefaProjetoController.sink.add;
 
-  Stream<bool> get outSubmitValido => Observable.combineLatest2(
-    outTitulo,
-    outTitulo,
-    (a,b) => true
-  );
-
   void getTarefas(int projetoId) async {
     try {
       var resposta = await _repository.getProjetos(projetoId);
@@ -35,7 +29,7 @@ class HomeTarefaBloc extends BlocBase {
     try {
       return _repository.criarTarefa(_getTarefa().toJson(projetoId));
     }catch(e) {
-      throw(e);
+      print(e);
     }
   }
 
@@ -56,5 +50,6 @@ class HomeTarefaBloc extends BlocBase {
   @override
   void dispose() {
     _tarefasController.close();
+    _tituloTarefaProjetoController.close();
   }
 }
